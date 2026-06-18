@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <!-- Viewport otimizado para mobile sem bloquear o zoom por questões de acessibilidade -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projeto de Extensão GLP-1</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        html { 
+            scroll-behavior: smooth; 
+            -webkit-tap-highlight-color: transparent; /* Remove o piscar azul ao tocar em botões no mobile */
+        }
+        body { 
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
+        }
+        
+        /* Animação suave para troca de abas */
+        .tab-content { display: none; animation: fadeIn 0.4s ease-out forwards; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { 
+            from { opacity: 0; transform: translateY(12px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+        
+        /* Navegação Horizontal Otimizada para Touch */
+        .nav-container {
+            display: flex;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch; /* Rolagem elástica no iOS */
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none;  /* IE and Edge */
+        }
+        .nav-container::-webkit-scrollbar { 
+            display: none; /* Chrome, Safari and Opera */
+        }
+        
+        /* Botões do Menu */
+        .nav-btn { 
+            scroll-snap-align: start;
+            flex: 0 0 auto;
+            padding: 1.125rem 1.25rem;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #64748b;
+            border-bottom: 3px solid transparent; 
+            transition: all 0.2s ease; 
+        }
+        .nav-btn.active { 
+            color: #0369a1; 
+            border-bottom-color: #0284c7; 
+            background-color: rgba(240, 249, 255, 0.6);
+        }
+
+        /* Formatação de recuo para Bibliografia ABNT */
+        .abnt-indent {
+            padding-left: 2rem;
+            text-indent: -2rem;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 flex flex-col min-h-screen text-slate-800">
+
+    <!-- Cabeçalho (Header) Otimizado para Mobile -->
+    <header class="bg-gradient-to-b from-sky-100 to-sky-50 pt-12 pb-8 px-5 sm:py-16 border-b border-sky-200">
+        <div class="max-w-4xl mx-auto text-center">
+            <span class="inline-block py-1 px-3 rounded-full bg-sky-200 text-sky-800 font-bold tracking-widest uppercase text-xs mb-4 shadow-sm">
+                Projeto de Extensão • Bioquímica
+            </span>
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 mb-5 leading-tight">
+                Agonistas de GLP-1: Mecanismos Biológicos e Saúde Pública
+            </h1>
+            <p class="text-base sm:text-lg md:text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed px-2">
+                Um guia científico abrangente sobre o funcionamento fisiológico, as indicações clínicas validadas e os sérios riscos associados ao uso indiscriminado e estético das "canetas emagrecedoras".
+            </p>
+        </div>
+    </header>
+
+    <!-- Navegação (Sticky com Efeito de Vidro) -->
+    <nav id="sticky-nav" class="bg-white/90 backdrop-blur-md shadow-sm sticky top-0 z-30 border-b border-slate-200 transition-all">
+        <div class="nav-container max-w-5xl mx-auto">
+            <button onclick="switchTab('fisiologia', this)" class="nav-btn active">Fisiologia e Funcionamento</button>
+            <button onclick="switchTab('indicacoes', this)" class="nav-btn">Indicações Clínicas</button>
+            <button onclick="switchTab('riscos', this)" class="nav-btn">Riscos e Efeitos Adversos</button>
+            <button onclick="switchTab('bibliografia', this)" class="nav-btn">Bibliografia</button>
+        </div>
+    </nav>
+
+    <!-- Conteúdo Principal -->
+    <main id="main-content" class="w-full max-w-5xl mx-auto px-4 py-8 sm:py-12 flex-grow">
+
+        <!-- ABA 1: Fisiologia e Funcionamento -->
+        <section id="fisiologia" class="tab-content active">
+            <div class="space-y-6 sm:space-y-8">
+                
+                <!-- Bloco 1 -->
+                <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-md border border-slate-100">
+                    <h2 class="text-2xl sm:text-3xl font-bold text-sky-800 mb-4">A Biologia do Hormônio GLP-1</h2>
+                    <p class="text-base sm:text-lg text-slate-700 leading-relaxed mb-4">
+                        O funcionamento do nosso metabolismo depende de uma comunicação química perfeita entre o sistema digestivo e o cérebro. O GLP-1 (peptídeo semelhante ao glucagon tipo 1) é um hormônio natural da classe das incretinas, produzido por células específicas do intestino delgado e do cólon logo após a ingestão de alimentos.
+                    </p>
+                    <p class="text-base sm:text-lg text-slate-700 leading-relaxed mb-6">
+                        Esse hormônio atua como um verdadeiro maestro da nossa energia corporal, agindo em diversas frentes biológicas de forma simultânea:
+                    </p>
+                    
+                    <div class="grid gap-4 sm:grid-cols-2">
+                        <div class="bg-blue-50 p-5 rounded-xl border border-blue-100">
+                            <div class="flex items-center gap-3 mb-2">
+                                <div class="bg-blue-200 p-2 rounded-lg text-blue-800">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                                </div>
+                                <h3 class="font-bold text-sky-800 text-lg">Ação no Pâncreas</h3>
+                            </div>
+                            <p class="text-slate-600 leading-relaxed">Estimula a liberação de insulina de forma dependente da glicose (evitando crises de hipoglicemia) e freia a liberação de glucagon, impedindo o fígado de jogar mais glicose na corrente sanguínea.</p>
+                        </div>
+
+                        <div class="bg-indigo-50 p-5 rounded-xl border border-indigo-100">
+                            <div class="flex items-center gap-3 mb-2">
+                                <div class="bg-indigo-200 p-2 rounded-lg text-indigo-800">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                </div>
+                                <h3 class="font-bold text-indigo-800 text-lg">Ação no Estômago</h3>
+                            </div>
+                            <p class="text-slate-600 leading-relaxed">Retarda consideravelmente o esvaziamento gástrico. A digestão fica mais lenta, o que modula a absorção dos nutrientes e prolonga fisicamente a sensação de estômago cheio.</p>
+                        </div>
+
+                        <div class="bg-sky-50 p-5 rounded-xl border border-sky-100 sm:col-span-2">
+                            <div class="flex items-center gap-3 mb-2">
+                                <div class="bg-sky-200 p-2 rounded-lg text-sky-800">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+                                </div>
+                                <h3 class="font-bold text-sky-800 text-lg">Ação no Sistema Nervoso Central</h3>
+                            </div>
+                            <p class="text-slate-600 leading-relaxed">O GLP-1 atravessa a barreira hematoencefálica e atua no hipotálamo (centro regulador do apetite). Isso promove saciedade profunda e reduz o desejo impulsivo associado a alimentos altamente calóricos.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bloco 2 -->
+                <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-md border border-slate-100">
+                    <h2 class="text-2xl sm:text-3xl font-bold text-sky-800 mb-4">A Inovação dos Análogos Sintéticos</h2>
+                    <p class="text-base sm:text-lg text-slate-700 leading-relaxed mb-4">
+                        O grande obstáculo terapêutico do GLP-1 produzido pelo próprio corpo é a sua vida útil extremamente curta: ele é destruído em poucos minutos por uma enzima específica do organismo chamada DPP-4. Para contornar essa barreira, a ciência farmacêutica desenvolveu os chamados <strong>agonistas do receptor de GLP-1</strong>.
+                    </p>
+                    <p class="text-base sm:text-lg text-slate-700 leading-relaxed mb-0">
+                        Esses medicamentos são moléculas desenhadas em laboratório que imitam com perfeição o hormônio humano, mas possuem uma alteração estrutural estratégica resistente à destruição enzimática. Como resultado, o efeito do medicamento permanece ativo no sangue por dias ou até uma semana inteira, resultando em perda de peso sustentada e controle rigoroso da glicemia.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABA 2: Indicações Clínicas -->
+        <section id="indicacoes" class="tab-content">
+            <div class="space-y-6 sm:space-y-8">
+                
+                <!-- Bloco 1 -->
+                <div class="bg-teal-50/50 rounded-2xl p-6 sm:p-8 shadow-md border border-teal-100">
+                    <h2 class="text-2xl sm:text-3xl font-bold text-teal-900 mb-4">Indicações Clínicas Validadas</h2>
+                    <p class="text-base sm:text-lg text-teal-800 leading-relaxed mb-6">
+                        A aprovação clínica dessas medicações foi conquistada após anos de ensaios rigorosos, visando tratar doenças crônicas onde os benefícios superam os riscos biológicos. As prescrições médicas concentram-se em dois grupos:
+                    </p>
+                    
+                    <div class="space-y-4">
+                        <div class="bg-white p-5 rounded-xl shadow-sm border border-teal-50">
+                            <h3 class="font-bold text-teal-700 text-lg mb-2 flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-teal-500"></span>
+                                Diabetes Mellitus Tipo 2
+                            </h3>
+                            <p class="text-slate-600 leading-relaxed">
+                                Utilizado para alcançar o controle da glicemia em pacientes cujo metabolismo já não responde de forma adequada aos medicamentos orais tradicionais. A terapia ajuda a proteger as células produtoras de insulina do pâncreas e a diminuir a resistência insulínica sistêmica.
+                            </p>
+                        </div>
+                        <div class="bg-white p-5 rounded-xl shadow-sm border border-teal-50">
+                            <h3 class="font-bold text-teal-700 text-lg mb-2 flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-teal-500"></span>
+                                Obesidade Clínica
+                            </h3>
+                            <p class="text-slate-600 leading-relaxed">
+                                Plenamente reconhecida como doença crônica, inflamatória e complexa. O uso é indicado para indivíduos com Índice de Massa Corporal (IMC) na faixa de obesidade, ou pessoas com sobrepeso que sofrem de comorbidades (hipertensão arterial, esteatose hepática ou problemas cardiovasculares).
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bloco 2 -->
+                <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-md border border-slate-100">
+                    <h2 class="text-2xl sm:text-3xl font-bold text-sky-800 mb-4">Benefícios Além da Perda de Peso</h2>
+                    <p class="text-base sm:text-lg text-slate-700 leading-relaxed mb-5">
+                        Pesquisas bioquímicas demonstraram que o impacto metabólico da ativação dos receptores de GLP-1 tem grande potencial para a melhoria da saúde sistêmica:
+                    </p>
+                    <ul class="space-y-4">
+                        <li class="flex gap-3">
+                            <svg class="w-6 h-6 text-sky-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span class="text-slate-700 text-base sm:text-lg"><strong>Proteção Cardiovascular:</strong> Redução significativa no risco de desfechos graves, como infartos do miocárdio e acidentes vasculares cerebrais (AVC), em populações de alto risco cardíaco.</span>
+                        </li>
+                        <li class="flex gap-3">
+                            <svg class="w-6 h-6 text-sky-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span class="text-slate-700 text-base sm:text-lg"><strong>Saúde Hepática:</strong> A perda de tecido adiposo visceral contribui para a redução da inflamação global e promove a regressão da esteatose hepática metabólica.</span>
+                        </li>
+                        <li class="flex gap-3">
+                            <svg class="w-6 h-6 text-sky-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span class="text-slate-700 text-base sm:text-lg"><strong>Apneia Obstrutiva do Sono:</strong> A diminuição da gordura na região do pescoço alivia drasticamente os episódios de apneia, melhorando a oxigenação durante o sono.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABA 3: Riscos e Efeitos Adversos -->
+        <section id="riscos" class="tab-content">
+            <div class="space-y-6 sm:space-y-8">
+
+                <!-- Bloco de Alerta -->
+                <div class="bg-rose-50 rounded-2xl p-6 sm:p-8 shadow-md border border-rose-100">
+                    <div class="flex items-center gap-3 mb-3">
+                        <svg class="w-8 h-8 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                        <h2 class="text-2xl sm:text-3xl font-bold text-rose-900">O Perigo do Uso Estético (Off-Label)</h2>
+                    </div>
+                    <p class="text-base sm:text-lg text-rose-800 leading-relaxed mb-0">
+                        Impulsionado irresponsavelmente pelas redes sociais, o uso dessas medicações por indivíduos saudáveis — que desejam perder apenas alguns quilos — tornou-se um grave problema de saúde pública. Sem obesidade ou diabetes, o organismo sofre intervenção metabólica injustificada. A ausência de acompanhamento impede o controle das doses e abre portas para reações adversas severas.
+                    </p>
+                </div>
+
+                <!-- Consequências Fisiopatológicas -->
+                <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-md border border-slate-100">
+                    <h2 class="text-2xl sm:text-3xl font-bold text-slate-800 mb-6 sm:mb-8">Consequências Fisiopatológicas e Riscos</h2>
+                    
+                    <div class="space-y-6">
+                        <div class="bg-slate-50 rounded-xl p-5 border-l-4 border-amber-500">
+                            <h3 class="text-xl font-bold text-slate-800 mb-2">Redução Drástica de Massa Magra (Sarcopenia)</h3>
+                            <p class="text-slate-700 leading-relaxed text-base sm:text-lg">
+                                Com a rápida perda de peso devido à supressão do apetite, estudos alertam que <strong>até 25% do peso eliminado é composto por massa magra celular (músculo)</strong>. Essa degradação muscular (sarcopenia) enfraquece o indivíduo, prejudica a densidade óssea e reduz o metabolismo basal. É inegociável realizar exercícios de força resistida e ter acompanhamento nutricional para o aporte de proteínas.
+                            </p>
+                        </div>
+
+                        <div class="bg-slate-50 rounded-xl p-5 border-l-4 border-red-600">
+                            <h3 class="text-xl font-bold text-slate-800 mb-2">Pancreatite Aguda e Falência de Órgãos</h3>
+                            <p class="text-slate-700 leading-relaxed text-base sm:text-lg">
+                                Como hiperestimulam o pâncreas, um efeito colateral documentado é a pancreatite (inflamação aguda). A Anvisa já registrou <strong>centenas de casos de internação e notificações de óbitos</strong>. O perigo multiplica-se vertiginosamente com automedicação ou uso de produtos manipulados e falsificados sem garantia biológica.
+                            </p>
+                        </div>
+
+                        <div class="bg-slate-50 rounded-xl p-5 border-l-4 border-indigo-500">
+                            <h3 class="text-xl font-bold text-slate-800 mb-2">Transtornos Gastrointestinais e Efeito Rebote</h3>
+                            <p class="text-slate-700 leading-relaxed text-base sm:text-lg">
+                                Devido ao retardo no esvaziamento do estômago, os pacientes relatam náuseas incapacitantes, vômitos severos e constipação. Pior ainda é o <strong>efeito rebote</strong>: a suspensão abrupta do hormônio sintético faz o centro da fome retornar com intensidade exacerbada. A grande maioria recupera o peso perdido em ritmo superior à perda inicial se não houver reeducação de estilo de vida.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ABA 4: Bibliografia -->
+        <section id="bibliografia" class="tab-content">
+            <div class="bg-white rounded-2xl p-6 sm:p-8 md:p-10 shadow-md border border-slate-100">
+                <h2 class="text-2xl sm:text-3xl font-bold text-sky-800 mb-6 sm:mb-8">Bibliografia Consultada</h2>
+                
+                <!-- ABNT formatting & break-words for mobile -->
+                <div class="space-y-6 text-sm sm:text-base text-slate-700 break-words abnt-indent">
+                    
+                    <p class="leading-relaxed">
+                        ASSOCIAÇÃO BRASILEIRA PARA O ESTUDO DA OBESIDADE E DA SÍNDROME METABÓLICA (ABESO). <strong>Diretrizes brasileiras de obesidade</strong>. São Paulo: ABESO, 2024.
+                    </p>
+
+                    <p class="leading-relaxed">
+                        CASEMIRO, P. Brasil registra seis mortes suspeitas por pancreatite associadas a canetas emagrecedoras, aponta Anvisa. <strong>G1</strong>, São Paulo, 7 fev. 2026. Seção Saúde.
+                    </p>
+
+                    <p class="leading-relaxed">
+                        HOLST, J. J. The physiology of glucagon-like peptide 1. <strong>Physiological Reviews</strong>, v. 87, n. 4, p. 1409-1439, out. 2007.
+                    </p>
+
+                    <p class="leading-relaxed">
+                        KARAKASIS, P.; PATOULIAS, D.; FRAGAKIS, N.; MANTZOROS, C. S. Effect of glucagon-like peptide-1 receptor agonists and co-agonists on body composition: Systematic review and network meta-analysis. <strong>Metabolism</strong>, v. 164, p. 156113, mar. 2025.
+                    </p>
+
+                    <p class="leading-relaxed">
+                        LIU, Y.; RUAN, B.; JIANG, H.; LE, S.; LIU, Y.; AO, X.; HUANG, Y.; SHI, X.; XUE, R.; FU, X.; WANG, S. The weight-loss effect of GLP-1RAs glucagon-like peptide-1 receptor agonists in non-diabetic individuals with overweight or obesity: A systematic review with meta-analysis and trial sequential analysis of randomized controlled trials. <strong>The American Journal of Clinical Nutrition</strong>, v. 118, n. 4, p. 614-626, 2023.
+                    </p>
+
+                    <p class="leading-relaxed">
+                        ORGANIZAÇÃO MUNDIAL DA SAÚDE (OMS). <strong>Diretrizes globais sobre o manejo e tratamento da obesidade como patologia crônica</strong>. Genebra: OMS, 2024.
+                    </p>
+
+                    <p class="leading-relaxed">
+                        SOUSA, N. Medicamentos à base de GLP-1: o que você precisa saber sobre os remédios mais modernos para diabetes e obesidade. <strong>Blog Dra. Nathalia Sousa - Endocrinologista e Metabologista</strong>, São Paulo, 7 maio 2025.
+                    </p>
+
+                    <p class="leading-relaxed">
+                        WILDING, J. P. H. <i>et al.</i> Once-Weekly Semaglutide in Adults with Overweight or Obesity. <strong>The New England Journal of Medicine</strong>, v. 384, n. 11, p. 989-1002, mar. 2021.
+                    </p>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div class="h-12 sm:h-16"></div> <!-- Espaço de respiro para o final do scroll no telemóvel -->
+
+    <script>
+        function switchTab(tabId, btnElement) {
+            // Esconde todas as abas
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // Remove classe ativa de todos os botões
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Ativa a aba atual
+            document.getElementById(tabId).classList.add('active');
+            
+            // Ativa o botão clicado
+            btnElement.classList.add('active');
+            
+            // Lógica de Scroll Perfeito para Mobile
+            // 1. Centraliza o botão no menu horizontal
+            btnElement.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            
+            // 2. Rola a página para baixo do menu sticky, independente do tamanho do ecrã
+            if (window.innerWidth < 768) {
+                // Seleciona a barra de navegação e o conteúdo principal
+                const navBar = document.getElementById('sticky-nav');
+                const mainContent = document.getElementById('main-content');
+                
+                // Calcula exatamente onde o conteúdo começa, subtraindo a altura da barra que está por cima
+                const scrollPosition = mainContent.offsetTop - navBar.offsetHeight - 10;
+                
+                window.scrollTo({ 
+                    top: scrollPosition, 
+                    behavior: 'smooth' 
+                });
+            }
+        }
+    </script>
+</body>
+</html>
